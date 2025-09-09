@@ -1,0 +1,28 @@
+# cmake-format configuration for Thunder-131648
+# Install: pip install cmakelang
+# Usage:   cmake-format -i <CMakeLists.txt or *.cmake>
+
+format:
+  line_width: 120
+  tab_size: 2
+  separate_ctrl_name_with_space: true
+  dangle_parens: false
+  max_subargs_per_line: 4
+  max_lines_hwrap: 2
+  command_case: 'lower'
+  keyword_case: 'upper'
+  enable_sort: true
+  autosort: true
+
+parse:
+  # Recognize Thunder helper commands/macros if any are added in the future
+  additional_commands: {}
+
+lint:
+  disabled_codes:
+    - C0111   # Prefer explicit spacing around control names is handled by format rules
+  max_conditionals_custom_parser: 2
+  max_conditionals_shell: 2
+
+markup:
+  enable_markup: true

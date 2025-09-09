@@ -16,6 +16,19 @@ All documentation and build instructions for Thunder can be found here: [Documen
 Interfaces documentation can be found here:
 https://webplatformforembedded.github.io/ServicesInterfaceDocumentation
 
+## Developer tooling: cmake-format
+
+This repository includes a cmake-format configuration at .cmake-format.yaml to keep CMake style consistent.
+
+- Install: pip install cmakelang
+- Format a file in-place:
+  - cmake-format -i CMakeLists.txt
+  - cmake-format -i cmake/*.cmake
+- Check formatting in CI-style (non-destructive):
+  - cmake-format CMakeLists.txt
+
+Tip: configure your editor to run cmake-format on save using this repository's .cmake-format.yaml.
+
 # Copyright and License
 
 Thunder is Copyright 2018 Metrological and licensed under the Apache License, Version 2.0. See the LICENSE and NOTICE files in the top level directory for further details.
