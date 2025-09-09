@@ -16,18 +16,72 @@ All documentation and build instructions for Thunder can be found here: [Documen
 Interfaces documentation can be found here:
 https://webplatformforembedded.github.io/ServicesInterfaceDocumentation
 
+## EditorConfig policy
+
+This repository includes a .editorconfig that enforces:
+- LF line endings
+- UTF-8 encoding
+- Consistent indentation (spaces) and size per file type
+- Trimming trailing whitespace and ensuring a final newline
+
+Most IDEs respect .editorconfig automatically. Enable “Format on Save” if available.
+
 ## Developer tooling: cmake-format
 
-This repository includes a cmake-format configuration at .cmake-format.yaml to keep CMake style consistent.
+A cmake-format configuration is provided at .cmake-format.yaml to keep all CMake files consistent.
 
-- Install: pip install cmakelang
-- Format a file in-place:
-  - cmake-format -i CMakeLists.txt
-  - cmake-format -i cmake/*.cmake
-- Check formatting in CI-style (non-destructive):
-  - cmake-format CMakeLists.txt
+- Install:
+  ```
+  pip install cmakelang
+  ```
+  (This provides the `cmake-format` tool.)
 
-Tip: configure your editor to run cmake-format on save using this repository's .cmake-format.yaml.
+- Format in place:
+  ```
+  cmake-format -i CMakeLists.txt
+  find . -type f \( -name 'CMakeLists.txt' -o -name '*.cmake' \) -print0 | xargs -0 cmake-format -i
+  ```
+
+- Preview (non-destructive) for a single file:
+  ```
+  cmake-format CMakeLists.txt | diff -u CMakeLists.txt -
+  ```
+  For CI-style checks you can format in place and then verify no diffs:
+  ```
+  find . -type f \( -name 'CMakeLists.txt' -o -name '*.cmake' \) -print0 | xargs -0 cmake-format -i
+  git diff --exit-code
+  ```
+
+- Editor integration:
+  - VS Code: use an extension that runs `cmake-format` or configure a task to format on save.
+  - CLion/Visual Studio Code/Qt Creator: configure an external tool or save action to call `cmake-format -i` on CMake files.
+
+## Optional: pre-commit hook (cmake-format)
+
+Using pre-commit is optional but recommended for consistent formatting on commit.
+
+1) Install and enable:
+```
+pip install pre-commit
+pre-commit install
+```
+
+2) Example .pre-commit-config.yaml snippet:
+```
+repos:
+  - repo: https://github.com/cheshirekow/cmake_format
+    rev: v0.6.13
+    hooks:
+      - id: cmake-format
+        files: "\\.(cmake|CMakeLists.txt)$"
+```
+
+3) Run manually on demand:
+```
+pre-commit run -a
+```
+
+Tip: The hook respects the repository’s `.cmake-format.yaml`.
 
 # Copyright and License
 
